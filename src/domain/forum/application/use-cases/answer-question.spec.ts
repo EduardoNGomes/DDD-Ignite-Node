@@ -3,6 +3,7 @@ import { AnswerRepository } from '../repositories/answer-repository'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 const fakeAnswersRepository: AnswerRepository = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   create: async (answer: Answer) => {
     // eslint-disable-next-line no-useless-return
     return
