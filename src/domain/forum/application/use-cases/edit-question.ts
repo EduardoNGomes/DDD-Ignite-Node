@@ -1,20 +1,24 @@
 import { QuestionsRepository } from '../repositories/question-repository'
 
-interface DeleteQuestionUseCaseRequest {
+interface EditQuestionUseCaseRequest {
   questionId: string
   authorId: string
+  title: string
+  content: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DeleteQuestionUseCaseResponse {}
+interface EditQuestionUseCaseResponse {}
 
-export class DeleteQuestionUseCase {
+export class EditQuestionUseCase {
   constructor(private questionsRepository: QuestionsRepository) {}
 
   async execute({
     questionId,
     authorId,
-  }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
+    content,
+    title,
+  }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
     const question = await this.questionsRepository.findById(questionId)
 
     if (!question) throw new Error('Question not found')
@@ -23,7 +27,10 @@ export class DeleteQuestionUseCase {
       throw new Error('Not allowed')
     }
 
-    await this.questionsRepository.delete(question)
+    question.title = title
+    question.content = content
+
+    await this.questionsRepository.save(question)
 
     return {}
   }
