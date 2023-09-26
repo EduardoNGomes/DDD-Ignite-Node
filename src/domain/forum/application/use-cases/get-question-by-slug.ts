@@ -24,8 +24,6 @@ export class GetQuestionBySlugUseCase {
 
     if (!question) return left(new ResourceNotFoundError())
 
-    return right({
-      question,
-    })
+    return right({ question })
   }
 }
