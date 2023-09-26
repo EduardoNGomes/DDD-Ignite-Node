@@ -3,7 +3,7 @@ import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 export interface AnswersRepository {
   findById(id: string): Promise<Answer | null>
-  finManyByQuestionId(
+  findManyByQuestionId(
     questionId: string,
     params: PaginationParams,
   ): Promise<Answer[]>
