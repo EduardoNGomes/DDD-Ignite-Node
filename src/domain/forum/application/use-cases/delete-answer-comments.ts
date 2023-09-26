@@ -1,3 +1,4 @@
+import { Either, left, right } from '@/core/either'
 import { AnswerCommentsRepository } from '../repositories/answer-comments-repository'
 
 interface DeleteAnswerCommentUseCaseRequest {
@@ -5,8 +6,7 @@ interface DeleteAnswerCommentUseCaseRequest {
   answerCommentId: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DeleteAnswerCommentUseCaseResponse {}
+type DeleteAnswerCommentUseCaseResponse = Either<string, object>
 
 export class DeleteAnswerCommentUseCase {
   constructor(private answerCommentsRepository: AnswerCommentsRepository) {}
@@ -18,14 +18,14 @@ export class DeleteAnswerCommentUseCase {
     const answerComment =
       await this.answerCommentsRepository.findById(answerCommentId)
 
-    if (!answerComment) throw new Error(`Answer Comment not found`)
+    if (!answerComment) return left('Answer commment not found')
 
     if (answerComment.authorId.toString() !== authorId) {
-      throw new Error(`Not Allowed`)
+      return left('Not allowed')
     }
 
     await this.answerCommentsRepository.delete(answerComment)
 
-    return {}
+    return right({})
   }
 }
