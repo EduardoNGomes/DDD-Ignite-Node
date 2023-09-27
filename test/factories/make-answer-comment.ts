@@ -11,8 +11,8 @@ export function makeAnswerComment(
 ) {
   const answerComment = AnswerComment.create(
     {
-      authorId: new UniqueEntityID('1'),
-      answerId: new UniqueEntityID('1'),
+      authorId: new UniqueEntityID(),
+      answerId: new UniqueEntityID(),
       content: faker.lorem.text(),
       ...override,
     },
